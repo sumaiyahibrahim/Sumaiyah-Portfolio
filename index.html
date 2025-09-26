@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sumaiyah – Portfolio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon-sparkle.svg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Minimal custom styles (fonts + requested hero hover/button) -->
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .font-playwrite { font-family: 'Playwrite AU SA', cursive; }
+
+        /* Requested hover behavior */
+        .hi-container {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+        }
+        .hi-text {
+          display: inline-block;
+          position: relative;
+          transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .hi-container:hover .hi-text {
+          transform: translateY(5px);
+          color: #FFB6C1;
+        }
+
+        /* GIF hidden by default; appears on hover */
+        .hi-gif {
+          height: 1em;
+          width: auto;
+          vertical-align: baseline;
+          margin-right: 8px;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.2s ease;
+        }
+        .hi-container:hover .hi-gif {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        /* Restore custom button as requested */
+        .custom-button {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 24px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          outline: none;
+          user-select: none;
+          color: #ffffff;
+          border: 1px solid #000000;
+          border-radius: 4px;
+          background-color: #ec4899;
+          box-shadow: 4px 4px 0px 0px #be185d;
+          text-decoration: none;
+          text-align: center;
+        }
+        .custom-button:hover {
+          transition: all 0.3s ease;
+          transform: translateY(-2px);
+        }
+        /* Removed line-clamp; width will control to ~3 lines while showing full text */
+    </style>
+</head>
+<body class="bg-[#f8f8e1]">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white/20 backdrop-blur-xl backdrop-saturate-150">
+        <nav class="mx-auto max-w-7xl p-3 md:p-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+            <!-- Left: Logo -->
+            <a href="index.html" class="justify-self-start">
+                <img src="assets/logo-sparkle.svg" alt="Logo" class="h-10 w-10">
+            </a>
+
+            <!-- Center: Desktop Nav (stable, non-moving) -->
+            <div class="hidden lg:block justify-self-center">
+                <ul class="flex items-center justify-center gap-8 text-gray-700">
+                    <li><a href="#home" class="text-gray-700 hover:text-pink-500 transition-colors">Home</a></li>
+                    <li class="text-black">✦</li>
+                    <li><a href="about.html" class="text-gray-700 hover:text-pink-500 transition-colors">About</a></li>
+                    <li class="text-black">✦</li>
+                    <li><a href="project.html" class="text-gray-700 hover:text-pink-500 transition-colors">Projects</a></li>
+                    <li class="text-black">✦</li>
+                    <li><a href="playground.html" class="text-gray-700 hover:text-pink-500 transition-colors">Playground</a></li>
+                    <li class="text-black">✦</li>
+                    <li><a href="connect.html" class="text-gray-700 hover:text-pink-500 transition-colors">Connect</a></li>
+                </ul>
+            </div>
+
+            <!-- Right: Socials -->
+            <div class="hidden lg:flex items-center justify-self-end space-x-6 text-gray-700 text-xl">
+                <a href="https://github.com/sumaiyahibrahim" target="_blank" rel="noopener noreferrer" class="hover:text-pink-500 transition-colors"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/sumaiyah-ibrahim-27049a284" target="_blank" rel="noopener noreferrer" class="hover:text-pink-500 transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:sumaiyahibrahim15@gmail.com" class="hover:text-pink-500 transition-colors"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <!-- Mobile Nav Button -->
+            <div id="hamburger" class="lg:hidden cursor-pointer justify-self-end">
+                <div class="w-6 h-0.5 bg-gray-700 mb-1.5 transition-transform duration-300"></div>
+                <div class="w-6 h-0.5 bg-gray-700 transition-opacity duration-300"></div>
+                <div class="w-6 h-0.5 bg-gray-700 mt-1.5 transition-transform duration-300"></div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-[#f8f8e1]/95 backdrop-blur-sm flex flex-col justify-center items-center z-40 transition-transform duration-300 -translate-x-full">
+        <ul class="text-2xl text-gray-700 text-center space-y-8">
+            <li><a href="#home" class="hover:text-pink-500">Home</a></li>
+            <li><a href="about.html" class="hover:text-pink-500">About</a></li>
+            <li><a href="project.html" class="hover:text-pink-500">Projects</a></li>
+            <li><a href="playground.html" class="hover:text-pink-500">Playground</a></li>
+            <li><a href="connect.html" class="hover:text-pink-500">Connect</a></li>
+        </ul>
+        <div class="flex items-center space-x-8 text-gray-700 text-3xl absolute bottom-20">
+            <a href="https://github.com/sumaiyahibrahim" target="_blank" rel="noopener noreferrer" class="hover:text-pink-500 transition-colors"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/sumaiyah-ibrahim-27049a284" target="_blank" rel="noopener noreferrer" class="hover:text-pink-500 transition-colors"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:sumaiyahibrahim15@gmail.com" class="hover:text-pink-500 transition-colors"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 py-8 pt-8 md:pt-12 overflow-hidden">
+
+        <!-- Decorative assets removed as requested -->
+
+        <!-- Main Content Container -->
+        <div class="container mx-auto max-w-7xl">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-16 xl:gap-20">
+                <!-- Image Container -->
+                <div class="flex-shrink-0">
+                    <div class="relative">
+                        <img src="assets/pic.jpg" alt="Sumaiyah" class="hero-image w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 max-w-full h-auto rounded-2xl shadow-2xl object-cover mx-auto md:mx-0">
+                    </div>
+                </div>
+
+                <!-- Text Content Container -->
+                <div class="flex-1 max-w-2xl text-left">
+                    <!-- Typography Section (as requested) -->
+                    <div class="mb-8 lg:mb-10 hero-text -mt-8 md:-mt-10">
+                        <div class="flex flex-col items-center md:items-start mb-4">
+                            <!-- Line 1: "Hi, I'm" -->
+                            <h1 class="font-playwrite font-light text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8rem] text-[#4a4a4a] leading-[0.9] tracking-tight">
+                              <span class="hi-container align-baseline">
+                                <img src="assets/hi-wave.gif" alt="Waving Hi" class="hi-gif">
+                                <span class="hi-text">Hi,</span>
+                              </span>
+                              <span> I'm</span>
+                            </h1>
+                            <!-- Line 2: "Sumaiyah!" -->
+                            <h1 class="font-playwrite font-light text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8rem] text-[#4a4a4a] leading-[0.9] tracking-tight mt-2 mb-2 md:mb-4">Sumaiyah!</h1>
+                        </div>
+                        <p class="hero-subtext mt-8 md:mt-12 text-gray-600 text-base sm:text-lg md:text-base lg:text-lg leading-snug max-w-[54ch] sm:max-w-[56ch] md:max-w-[58ch] lg:max-w-[60ch]">
+                          Web dev blending pixels with Python. I craft responsive apps, play with AI/ML, and turn ideas into clean, functional code. From React to LangChain, I tinker across the stack to make tech smooth and human.
+                        </p>
+                        <div class="mt-8 flex justify-center md:justify-start">
+                          <a href="connect.html" class="custom-button">Get in Touch</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerLines = hamburger.children;
+
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.toggle('-translate-x-full');
+                hamburgerLines[0].classList.toggle('rotate-45');
+                hamburgerLines[0].classList.toggle('translate-y-2');
+                hamburgerLines[1].classList.toggle('opacity-0');
+                hamburgerLines[2].classList.toggle('-rotate-45');
+                hamburgerLines[2].classList.toggle('-translate-y-2');
+            });
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero section entrance animations
+            const tl = gsap.timeline();
+
+            // Set initial states
+            gsap.set(".hero-image", { opacity: 0, y: 50, scale: 0.8 });
+            gsap.set("h1", { opacity: 0, y: 30 });
+            gsap.set("p", { opacity: 0, y: 20 });
+            gsap.set(".hero-button", { opacity: 0, y: 20 });
+
+            // Animate elements in sequence
+            tl.to(".hero-image", {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1,
+                ease: "power3.out"
+            })
+            .to("h1", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power3.out"
+            }, "-0.5")
+            .to("p", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            }, "-0.3")
+            .to(".hero-button", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            }, "-0.1");
+
+            // Serpent ribbon loop over the name (GSAP-driven)
+            const maskPath = document.querySelector('#ribbonPathMask');
+            const sparklesGroup = document.querySelector('#ribbonSparkles');
+            const burst = document.querySelector('#ribbonBurst');
+
+            if (maskPath) {
+                // Base loop timeline (4s) animating stroke-dashoffset from 1200 -> 0
+                const baseDuration = 4;
+                const tlRibbon = gsap.timeline({
+                    repeat: -1,
+                    defaults: { ease: 'sine.inOut' },
+                    onRepeat: () => {
+                        // Small shimmer burst at the S on each loop
+                        if (burst) {
+                            gsap.fromTo(burst, { opacity: 0, scale: 0.6 }, { opacity: 0.9, scale: 1.15, duration: 0.25, yoyo: true, repeat: 1, ease: 'sine.out' });
+                        }
+                        // Brief sparkle intensification
+                        if (sparklesGroup) {
+                            gsap.fromTo(sparklesGroup, { opacity: 0.75 }, { opacity: 1, duration: 0.25, yoyo: true, repeat: 1 });
+                        }
+                    }
+                });
+                tlRibbon.set(maskPath, { attr: { 'stroke-dashoffset': 1200 } });
+                tlRibbon.to(maskPath, { attr: { 'stroke-dashoffset': 0 }, duration: baseDuration });
+
+                // Optional: accelerate slightly during user scroll
+                if (window.ScrollTrigger) {
+                    ScrollTrigger.create({
+                        onUpdate: (self) => {
+                            const v = Math.abs(self.getVelocity()); // px/s
+                            const target = gsap.utils.clamp(1, 2.5, 1 + v / 2000); // 1x to 2.5x
+                            gsap.to(tlRibbon, { timeScale: target, duration: 0.2, overwrite: true });
+                            if (sparklesGroup) gsap.to(sparklesGroup, { opacity: gsap.utils.clamp(0.7, 1, 0.7 + v / 3000), duration: 0.2 });
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+    <!-- Footer Border -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent relative">
+        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-pink-400 rotate-45"></div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="relative overflow-hidden bg-orange-50">
+        
+        <div class="relative mx-auto max-w-6xl px-6 py-8">
+            <!-- Main Footer Content -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                
+                <!-- Brand Section -->
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo-sparkle.svg" alt="Logo" class="w-10 h-10">
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-900">Sumaiyah</h3>
+                        <p class="text-xs text-gray-500">Aspiring AI · ML · Data Science Engineer</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <nav class="flex flex-wrap justify-center items-center gap-4">
+                    <a href="index.html" class="text-gray-600 hover:text-pink-500 transition-colors text-sm">Home</a>
+                    <span class="text-pink-400 text-xs">✦</span>
+                    <a href="about.html" class="text-gray-600 hover:text-pink-500 transition-colors text-sm">About</a>
+                    <span class="text-pink-400 text-xs">✦</span>
+                    <a href="project.html" class="text-gray-600 hover:text-pink-500 transition-colors text-sm">Projects</a>
+                    <span class="text-pink-400 text-xs">✦</span>
+                    <a href="playground.html" class="text-gray-600 hover:text-pink-500 transition-colors text-sm">Playground</a>
+                    <span class="text-pink-400 text-xs">✦</span>
+                    <a href="connect.html" class="text-gray-600 hover:text-pink-500 transition-colors text-sm">Connect</a>
+                </nav>
+                
+                <!-- Social Links -->
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/sumaiyahibrahim" target="_blank" rel="noopener noreferrer" 
+                       class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-pink-100 transition-colors group">
+                        <i class="fab fa-github text-sm text-gray-600 group-hover:text-pink-500"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sumaiyah-ibrahim-27049a284" target="_blank" rel="noopener noreferrer"
+                       class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-pink-100 transition-colors group">
+                        <i class="fab fa-linkedin text-sm text-gray-600 group-hover:text-pink-500"></i>
+                    </a>
+                    <a href="mailto:sumaiyahibrahim15@gmail.com"
+                       class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-pink-100 transition-colors group">
+                        <i class="fas fa-envelope text-sm text-gray-600 group-hover:text-pink-500"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+
+</html>
